@@ -1,0 +1,5 @@
+https://github.com/pallets/jinja/issues/695
+
+The [Null-Master Fallback](http://jinja.pocoo.org/docs/2.10/tricks/#null-master-fallback) tip mentions exactly what you have described above.
+
+test_inheritance.py

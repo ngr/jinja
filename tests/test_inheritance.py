@@ -200,6 +200,23 @@ class TestInheritance(object):
         assert rv == ['43', '44', '45']
 
 
+    def test_null_master_macro_fallback(self, env):
+        """ Test bahavior of Null-Master Fallback"""
+
+        d = {
+            'macros': '{% macro Foo() %}basefoo{% endmacro%}',
+            'base': '{% from "macros" import Foo with context %}'
+                    '{% block x %}'
+                    '{{ Foo() }}'
+                    '{% endblock %}',
+            'sub':  '{% extends "base" %}'
+                    '{% macro Foo() %}subfoo{% endmacro %}'
+                    '{% block x %}{{ super() }}{% endblock %}'
+        }
+        env = Environment(loader=DictLoader(d))
+        template = env.get_template("sub")
+        assert template.render() == "subfoo"
+
 @pytest.mark.inheritance
 class TestBugFix(object):
 
